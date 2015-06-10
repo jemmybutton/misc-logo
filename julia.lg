@@ -1,0 +1,24 @@
+    to julia :zr :zi :cr :ci :rs :i
+        make "s sum (power :zr 2)  (power :zi 2)
+        make "a product (sum 90 -towards list (difference xcor :zr) (difference ycor :zi)) 2
+        make "zrn sum (product (:s) (cos (:a))) :cr
+        make "zin sum (product (:s) (sin (:a))) :ci
+        make "f sqrt (sum (power :zrn 2)  (power :zin 2))
+        if :f > 2 [make "i :rs]
+        if :i >= :rs [
+            output :f
+        ]
+        output (julia :zrn :zin :cr :ci :rs (sum :i 1))
+    end
+    make "sc 0.0022
+    forever [
+        make "v (julia (product xcor :sc) (product ycor :sc) -0.78 -0.18 36  0)
+        ifelse :v < 3 [setpc 14] [setpc 4]
+        if :v < 2 [setpc 6]
+        if :v < 0.9 [setpc 2]
+        if :v < 0.66 [setpc 1]
+        if :v < 0.33 [setpc 5]
+        if :v < 0.2 [setpc 7]
+        fd sum (power (quotient (1 + random round (sum 1 :v)) 2) 2) 0.2
+        lt (random round (product (quotient 1 :v) 7)) - 2
+    ]
